@@ -1,0 +1,23 @@
+name: Deploy TG-IHOST Bot
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '24'
+    - name: Install dependencies
+      run: npm install
+    - name: Run Bot
+      env:
+        TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+        BOT_NAME: ${{ secrets.BOT_NAME }}
+      run: npm run dev
